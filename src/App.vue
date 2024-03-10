@@ -1,11 +1,24 @@
 <template>
   <v-app>
     <v-main>
-      <HelloWorld />
+      <!-- <HelloWorld /> -->
+      <router-view></router-view>
     </v-main>
   </v-app>
 </template>
 
-<script setup>
-  //
+<script>
+  export default {
+    mounted() {
+
+    },
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+
+    }
+  }
 </script>
