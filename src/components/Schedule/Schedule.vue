@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-wrapper" v-show="false">
+  <div class="calendar-wrapper" v-show="true">
     <v-container>
       <v-row justify="space-around">
         <v-date-picker color="primary" title="Today Work out"></v-date-picker>
@@ -7,17 +7,21 @@
     </v-container>
 
     <div class="button-wrapper">
-      <v-btn> 운동완료 </v-btn>
-      <v-btn> 다른 사람들은? </v-btn>
+      <div class="pa-4 text-center">
+        <PhotoModal></PhotoModal>
+      </div>
+      <div class="pa-4 text-center">
+        <v-btn> 다른 사람들은? </v-btn>
+      </div>
     </div>
 
     <Anothers v-show="false"></Anothers>
-
   </div>
 </template>
 
 <script>
 import Anothers from './Anothers'
+import PhotoModal from './PhotoModal'
 export default {
   components: {
     Anothers
