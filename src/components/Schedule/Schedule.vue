@@ -9,12 +9,12 @@
     <div class="button-wrapper">
       <div class="pa-4 text-center">
         <PhotoModal></PhotoModal>
+        <img src="http://localhost:3300/uploads/인직맨.png" alt="">
       </div>
       <div class="pa-4 text-center">
         <v-btn> 다른 사람들은? </v-btn>
       </div>
     </div>
-
     <Anothers v-show="false"></Anothers>
   </div>
 </template>
