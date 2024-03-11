@@ -2,7 +2,7 @@
   <div class="calendar-wrapper" v-show="true">
     <v-container>
       <v-row justify="space-around">
-        <v-date-picker color="primary" title="Today Work out"></v-date-picker>
+        <v-date-picker color="primary" title="Today Work out" v-model="reg_date"></v-date-picker>
       </v-row>
     </v-container>
 
@@ -12,7 +12,7 @@
         <img src="http://localhost:3300/uploads/인직맨.png" alt="">
       </div>
       <div class="pa-4 text-center">
-        <v-btn> 다른 사람들은? </v-btn>
+        <v-btn @click="AnothersPage"> 다른 사람들은? </v-btn>
       </div>
     </div>
     <Anothers v-show="false"></Anothers>
@@ -23,8 +23,18 @@
 import Anothers from './Anothers'
 import PhotoModal from './PhotoModal'
 export default {
+  data() {
+    return {
+      reg_date : null,
+    }
+  },
   components: {
     Anothers
+  },
+  methods : {
+    AnothersPage() {
+      this.$router.push('/Anothers');
+    }
   }
 
 }
