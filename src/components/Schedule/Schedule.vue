@@ -22,6 +22,7 @@
 <script>
 import Anothers from './Anothers'
 import PhotoModal from './PhotoModal'
+
 export default {
   data() {
     return {
