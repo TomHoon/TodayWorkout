@@ -1,8 +1,5 @@
 <template>
-  <v-alert v-show="alertAnothers" type="error" variant="elevated" closable class="alertAnothers"
-           style="position: fixed; top: 10%; left: 51%; transform: translate(-50%, -50%); z-index: 999 ">알럿창 입니다</v-alert>
-<v-alert v-show="alertToday" type="error" variant="elevated" closable class="alertToday"
-           style="position: fixed; top: 10%; left: 51%; transform: translate(-50%, -50%); z-index: 999 ">올바르지 않은 날짜입니다.</v-alert>
+  <v-alert v-show="alertError" type="error" variant="elevated" closable class="alertError">{{alertErrorMessage}}</v-alert>
 
   <div class="calendar-wrapper" v-show="true">
     <v-container>
@@ -32,17 +29,15 @@ export default {
   data() {
     return {
       reg_date : null,
-      alertAnothers: false,
-      alertToday: false,
+      alertError: false,
+      alertErrorMessage: '',
     }
   },
   components: {
     Anothers
   },
   mounted() {
-    console.log('getDate0 >>> ', this.reg_date);
-  },
-  computed: {
+
   },
   methods : {
     anothers() {
@@ -51,16 +46,18 @@ export default {
 
       if(!this.reg_date) {
         // alert('날짜를 선택해주세요');
-        this.alertAnothers = true; // v-alert창 띄우기
+        this.alertErrorMessage = '날짜를 선택해주세요.';
+        this.alertError = true; // v-alert창 띄우기
         setTimeout(() => {
-          this.alertAnothers = false;
+          this.alertError = false;
         }, 2000);
         return false;
       }
       if(this.reg_date < today) {
-        this.alertToday = true; // v-alert창 띄우기
+        this.alertErrorMessage = '올바르지 않는 날짜입니다.';
+        this.alertError = true; // v-alert창 띄우기
         setTimeout(() => {
-          this.alertToday = false;
+          this.alertError = false;
         }, 2000);
         return false;
 
@@ -91,17 +88,24 @@ export default {
   gap: 15px;
   margin:15px auto;
 }
-.alertAnothers {
-}
-.alertToday {
-
+.alertError {
+  animation: fall 0.5s linear 1;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 7%;
+  left: 51%;
+  z-index: 9999;
 }
 @keyframes fall {
   from {
     top: -90px;
   }
   to {
-    top: 0;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    top: 7%;
+    left: 51%;
+    z-index: 9999;
   }
 }
 
