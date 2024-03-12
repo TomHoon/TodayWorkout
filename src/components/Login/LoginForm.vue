@@ -1,5 +1,5 @@
 <template>
-  <div class="select-wrapper">
+  <div class="select-wrapper" v-show="false">
     <v-select
       id="selection"
       label="Select"
@@ -13,6 +13,9 @@
         <v-btn class="login-btn"> 로그인 </v-btn>
     </div>
   </div>
+
+  
+
 </template>
 
 <script>
