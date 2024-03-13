@@ -3,7 +3,7 @@
   <div class="calendar-wrapper" v-show="true">
     <v-container>
       <v-row justify="space-around">
-        <v-date-picker color="primary" title="Today Work out" v-model="reg_date" @input="onDateSelected"></v-date-picker>
+        <v-date-picker color="primary" title="Today Work out" v-model="reg_date" ></v-date-picker>
       </v-row>
     </v-container>
 
@@ -40,29 +40,23 @@ export default {
       const today = new Date();
       today.setDate(today.getDate() -1); // 오늘날짜도 선택 가능
       if(!this.reg_date) {
-        // alert('날짜를 선택해주세요');
-        this.alertErrorMessage = '날짜를 선택해주세요.';
-        this.alertError = true; // v-alert창 띄우기
-        setTimeout(() => {
-          this.alertError = false;
-        }, 2000);
+        this.alertErr('날짜를 선택해주세요.') ;
         return false;
       }
 
       if(this.reg_date < today) {
-        this.alertErrorMessage = '올바르지 않는 날짜입니다.';
-        this.alertError = true; // v-alert창 띄우기
-        setTimeout(() => {
-          this.alertError = false;
-        }, 2000);
+        this.alertErr('올바르지 않는 날짜입니다.') ;
         return false;
       }
       this.$router.push('/Anothers');
-    }
-  },
-  onDateSelected(date) {
-    // 선택된 날짜 값을 저장
-    this.reg_date = date;
+    },
+    alertErr(ErrorMessage) {
+      this.alertErrorMessage = ErrorMessage;
+      this.alertError = true; // v-alert창 띄우기
+      setTimeout(() => { // 2초후에 닫기
+        this.alertError = false;
+      }, 2000);
+    },
   },
 
 }

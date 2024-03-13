@@ -6,7 +6,7 @@
     <v-dialog v-model="dialog" max-width="480">
       <v-card title="인증사진첨부">
         <template v-slot:text>
-          <v-file-input label="File input" ref="fileUpload" v-model="fileUpload"></v-file-input>
+          <v-file-input type="file" label="File input" ref="fileUpload" accept="image/*" v-model="fileUpload"></v-file-input>
         </template>
 
         <v-card-actions>
@@ -28,7 +28,7 @@ export default {
       alertError: false,
       alertSuccess: false,
       scheduleList: [],
-      fileUpload: '',
+      fileUpload: null,
       alertErrorMessage: '',
       alertSuccessMessage: '',
     };
@@ -58,33 +58,40 @@ export default {
       const today = new Date();
       today.setDate(today.getDate() -1); // 오늘날짜도 선택 가능
       if(this.reg_date < today) { // 이전날짜 선택시 false
-        this.alertErrorMessage = '올바르지 않는 날짜입니다.';
-        this.alertError = true; // v-alert창 띄우기
-        setTimeout(() => { // 2초후에 닫기
-          this.alertError = false;
-        }, 2000);
+        this.alertErr('올바르지 않는 날짜입니다.');
         return false;
       }
 
-      if(!this.fileUpload) {
-        this.alertErrorMessage = '사진을 입력해 주세요.';
-        this.alertError = true; // v-alert창 띄우기
-        setTimeout(() => { // 2초후에 닫기
-          this.alertError = false;
-        }, 2000);
+      if(!this.fileUpload || this.fileUpload === '') { // 사진 미등록시 false
+        this.alertErr('사진을 입력해 주세요.');
         return false;
       }
-      this.alertSuccessMessage = '등록이 완료되었습니다.';
+
+      this.alertSuc('등록이 완료되었습니다.'); // 등록 성공시
+      const date = new Date(this.reg_date);
+      const formattedDate = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} `;
+      console.log('getDate >>> ', formattedDate);
+      console.log('fileUpload >>> ', this.fileUpload);
+      this.fileUpload = '';
+      this.dialog = false;
+    },
+
+    alertErr(ErrorMessage) {
+      this.alertErrorMessage = ErrorMessage;
+      this.alertError = true; // v-alert창 띄우기
+      setTimeout(() => { // 2초후에 닫기
+        this.alertError = false;
+      }, 2000);
+    },
+    alertSuc(SuccessMessage) {
+      this.alertSuccessMessage = SuccessMessage;
       this.alertSuccess = true; // v-alert창 띄우기
       setTimeout(() => { // 2초후에 닫기
         this.alertSuccess = false;
       }, 2000);
-      const date = new Date(this.reg_date);
-      const formattedDate = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} ` ;
-      console.log('getDate >>> ', formattedDate);
-      this.dialog = false;
-    }
-  },
+    },
+
+  }, // methods
 };
 </script>
 
