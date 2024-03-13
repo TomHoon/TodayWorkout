@@ -1,5 +1,5 @@
 <template>
-  <div class="select-wrapper" v-show="false">
+  <div class="select-wrapper" v-show="true">
     <v-select
       id="selection"
       label="Select"
@@ -10,7 +10,7 @@
       @update:modelValue="updated"
     />
     <div class="btn-wrapper">
-        <v-btn class="login-btn"> 로그인 </v-btn>
+        <v-btn class="login-btn" @click="login"> 로그인 </v-btn>
     </div>
   </div>
 
@@ -19,18 +19,35 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   props: {},
   data() {
     return {
-      members: ["Andy", "Mongz", "Gony", "Geogina", "Mingkey", "Tony"],
+      members: '',
+      membersInfo: [],
+      selected: ''
     };
   },
-  mounted() {},
+  mounted() {
+    this.getAllMembers();
+  },
   methods: {
-    updated(a) {
-      console.log(a);
+    updated(선택멤버) {
+      this.selected = 선택멤버;
     },
+    async getAllMembers() {
+      const res = await axios.get('http://tomhoon.duckdns.org:13300/getMembers');
+      this.membersInfo = res.data;
+      this.members = res.data.map(item => item.member_id);
+    },
+    login() {
+      const 멤버정보 = this.membersInfo.filter(멤버 => {
+        return 멤버.member_id == this.selected;
+      })
+      this.$router.push({ name: 'Password', params: {} });
+    }
   },
 };
 </script>
