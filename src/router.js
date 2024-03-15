@@ -4,7 +4,7 @@ import LoginForm from "@/components/Login/LoginForm";
 import LoginKeypad from "@/components/Login/LoginKeypad";
 import Schedule from "@/components/Schedule/Schedule";
 import Anothers from "@/components/Schedule/Anothers";
-
+// 
 const routes = [
   {
     path: "/",
@@ -12,7 +12,8 @@ const routes = [
   },
   {
     path: "/password",
-    component: LoginKeypad
+    name: 'Password',
+    component: LoginKeypad,
   },
   {
     path: "/schedule",

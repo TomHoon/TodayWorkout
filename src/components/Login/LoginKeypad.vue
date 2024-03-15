@@ -1,62 +1,64 @@
 <template>
-  <div class="code-wrap">
-    <div class="code-area">
-      <ul>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-      </ul>
-      <br />
-    </div>
-    <div class="login-btn">
-      <v-btn> 로그인 </v-btn>
-    </div>
-  </div>
-  <div class="keypad-wrapper">
-    <div class="key-row">
-      <div class="key-cell">
-        <button>1</button>
+  <div class="loginkeypad-page">
+    <div class="code-wrap">
+      <div class="code-area">
+        <ul>
+          <li>*</li>
+          <li>*</li>
+          <li>*</li>
+          <li>*</li>
+          <li>*</li>
+        </ul>
+        <br />
       </div>
-      <div class="key-cell">
-        <button>2</button>
-      </div>
-      <div class="key-cell">
-        <button>3</button>
+      <div class="login-btn">
+        <v-btn> 로그인 </v-btn>
       </div>
     </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>4</button>
+    <div class="keypad-wrapper">
+      <div class="key-row">
+        <div class="key-cell">
+          <button>1</button>
+        </div>
+        <div class="key-cell">
+          <button>2</button>
+        </div>
+        <div class="key-cell">
+          <button>3</button>
+        </div>
       </div>
-      <div class="key-cell">
-        <button>5</button>
+      <div class="key-row">
+        <div class="key-cell">
+          <button>4</button>
+        </div>
+        <div class="key-cell">
+          <button>5</button>
+        </div>
+        <div class="key-cell">
+          <button>6</button>
+        </div>
       </div>
-      <div class="key-cell">
-        <button>6</button>
+      <div class="key-row">
+        <div class="key-cell">
+          <button>7</button>
+        </div>
+        <div class="key-cell">
+          <button>8</button>
+        </div>
+        <div class="key-cell">
+          <button>9</button>
+        </div>
       </div>
-    </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>7</button>
-      </div>
-      <div class="key-cell">
-        <button>8</button>
-      </div>
-      <div class="key-cell">
-        <button>9</button>
-      </div>
-    </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>R</button>
-      </div>
-      <div class="key-cell">
-        <button>0</button>
-      </div>
-      <div class="key-cell">
-        <button>DEL</button>
+      <div class="key-row">
+        <div class="key-cell">
+          <button>R</button>
+        </div>
+        <div class="key-cell">
+          <button>0</button>
+        </div>
+        <div class="key-cell">
+          <button>DEL</button>
+        </div>
       </div>
     </div>
   </div>
@@ -64,7 +66,15 @@
 
 <script>
 export default {
-  mounted() {},
+  mounted() {
+    let a = localStorage.getItem('loginData');
+    console.log('a >>> ', a);
+  },
+  props: {
+    member_id: {
+      type: String
+    }
+  },
   data() {
     return {};
   },
@@ -76,6 +86,7 @@ export default {
 </script>
 
 <style scoped>
+.loginkeypad-page{position:relative;max-width:400px;height:100%;margin:0 auto}
 .code-wrap {
   height: 70%;
 }
@@ -123,5 +134,9 @@ export default {
   margin-left: 15px;
   margin-top: 15px;
   box-shadow: none;
+}
+
+@media screen and (max-width:723px){
+
 }
 </style>
