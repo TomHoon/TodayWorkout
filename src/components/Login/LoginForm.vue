@@ -75,7 +75,7 @@ export default {
     async setMembers() {
       const host = process.env.NODE_ENV != 'development' ? 'http://tomhoon.duckdns.org:13300' : 'http://localhost:3300';
       const {data} = await axios.get(`${host}/members`);
-      console.log('>>> ', process.env.NODE_ENV);
+      
       this.members = data;
       this.memberids = data.map(item => item.member_id);
     },
