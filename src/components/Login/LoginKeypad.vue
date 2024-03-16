@@ -1,62 +1,28 @@
 <template>
-  <div class="code-wrap">
-    <div class="code-area">
-      <ul>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-        <li>*</li>
-      </ul>
-      <br />
-    </div>
-    <div class="login-btn">
-      <v-btn> 로그인 </v-btn>
-    </div>
-  </div>
-  <div class="keypad-wrapper">
-    <div class="key-row">
-      <div class="key-cell">
-        <button>1</button>
+  <div class="loginkeypad-page">
+    <div class="code-wrap">
+      <div class="code-area">
+        <ul>
+          <!-- 비번 미입력시 초기값 -->
+          <li v-if="pressedPw.length == 0">
+            <span style="color:gray; opacity: 0.3;">****</span>
+          </li>
+          <!-- 비번 입력시 -->
+          <li v-for="(pw, idx) in pressedPw" :key="idx">
+              <span>*</span>
+          </li>
+        </ul>
+        <br />
       </div>
-      <div class="key-cell">
-        <button>2</button>
-      </div>
-      <div class="key-cell">
-        <button>3</button>
+      <div class="login-btn">
+        <v-btn @click="goLogin"> 로그인 </v-btn>
       </div>
     </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>4</button>
-      </div>
-      <div class="key-cell">
-        <button>5</button>
-      </div>
-      <div class="key-cell">
-        <button>6</button>
-      </div>
-    </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>7</button>
-      </div>
-      <div class="key-cell">
-        <button>8</button>
-      </div>
-      <div class="key-cell">
-        <button>9</button>
-      </div>
-    </div>
-    <div class="key-row">
-      <div class="key-cell">
-        <button>R</button>
-      </div>
-      <div class="key-cell">
-        <button>0</button>
-      </div>
-      <div class="key-cell">
-        <button>DEL</button>
+    <div class="keypad-wrapper">
+      <div class="key-row" v-for="(item, idx) in keys" :key="idx">
+        <div class="key-cell" v-for="sub in item" :key="sub">
+          <button @click.prevent="press(sub)">{{ sub }}</button>
+        </div>
       </div>
     </div>
   </div>
@@ -64,18 +30,49 @@
 
 <script>
 export default {
-  mounted() {},
   data() {
-    return {};
+    return {
+      keys: [
+        ['1', '2', '3'],
+        ['4', '5', '6'],
+        ['7', '8', '9'],
+        ['R', '0', 'DEL'],
+      ],
+      member: {},
+      pressedPw: []
+    };
+  },
+  props: {
+  },
+  mounted() {
+    this.member = localStorage.getItem('loginData');
   },
   methods: {
-    clicked() {
+    press(num) {
+      if (num == 'R') {
+        this.pressedPw = [];
+      } else if (num == 'DEL') {
+        this.pressedPw.pop();
+      } else {
+        this.pressedPw.push(num);
+      }
+    },
+    goLogin() {
+      const 입력비번 = this.pressedPw.join('');
+      const {member_pw: 진짜비번} = this.member;
+      
+      if (입력비번 == 진짜비번 || !진짜비번) {
+        this.$router.push('/schedule');
+      } else {
+        alert('비번이 올바르지 않습니다.');
+      }
     }
   },
 };
 </script>
 
 <style scoped>
+.loginkeypad-page{position:relative;max-width:400px;height:100%;margin:0 auto}
 .code-wrap {
   height: 70%;
 }
@@ -123,5 +120,9 @@ export default {
   margin-left: 15px;
   margin-top: 15px;
   box-shadow: none;
+}
+
+@media screen and (max-width:723px){
+
 }
 </style>
