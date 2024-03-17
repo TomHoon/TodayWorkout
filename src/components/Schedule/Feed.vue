@@ -62,6 +62,7 @@ export default {
     this.defaultImgUrl = 
       import.meta.env.MODE == 'dev' ? 'http://localhost:3300' : 'http://tomhoon.duckdns.org:13300';
 
+    this.defaultImgUrl += '/uploads'
     const res = await request.get('/schedule');
     console.log(res.data);
     this.feedData = res.data;

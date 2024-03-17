@@ -13,4 +13,4 @@ function createInstance() {
 
 const request = createInstance();
 
-module.exports = request;
+export default request;

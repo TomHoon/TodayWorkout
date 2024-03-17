@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import request from "../../api/index";
+import request from "@/api/index.js";
 
 export default {
   data() {
