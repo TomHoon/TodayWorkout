@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import request from "../../api/index";
 
 export default {
   data() {
@@ -58,16 +58,20 @@ export default {
   methods: {
     userLogin() {
       const data = this.getOne멤버데이터(this.selected);
-      localStorage.setItem("loginData", JSON.stringify(data));
+      localStorage.setItem("member_id", data.member_id);
+      localStorage.setItem("member_pw", data.member_pw);
+      
       this.$router.push("/password");
     },
     async setMembers() {
-      const host =
-        process.env.NODE_ENV != "development"
-          ? "http://tomhoon.duckdns.org:13300"
-          : "http://localhost:3300";
-      const { data } = await axios.get(`${host}/members`);
-
+      // const mode = import.meta.env.MODE;
+      // const host =
+      //   mode != "dev"
+      //     ? "http://tomhoon.duckdns.org:13300"
+      //     : "http://localhost:3300";
+      // const { data } = await axios.get(`${host}/members`);
+      
+      const { data } = await request.get('/members');
       this.members = data;
       this.memberids = data.map((item) => item.member_id);
     },

@@ -10,7 +10,6 @@
     <div class="button-wrapper">
       <div class="pa-4 text-center">
         <PhotoModal :reg_date="reg_date"></PhotoModal>
-        <img src="http://localhost:3300/uploads/인직맨.png" alt="">
       </div>
       <div class="pa-4 text-center">
         <v-btn @click="AnothersPage"> 다른 사람들은? </v-btn>
@@ -34,6 +33,10 @@ export default {
   },
   components: {
     Anothers
+  },
+  mounted() {
+    this.reg_date = new Date();
+    console.log('process.env ', import.meta.env.MODE);
   },
   methods : {
     AnothersPage() {

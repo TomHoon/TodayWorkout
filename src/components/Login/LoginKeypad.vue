@@ -45,7 +45,10 @@ export default {
   props: {
   },
   mounted() {
-    this.member = localStorage.getItem('loginData');
+    this.member = {
+      member_id: localStorage.getItem("member_id"),
+      member_pw: localStorage.getItem("member_pw")
+    };
   },
   methods: {
     press(num) {

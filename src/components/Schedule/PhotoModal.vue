@@ -18,7 +18,7 @@
     </v-dialog>
 </template>
 <script>
-import axios from 'axios';
+import request from '@/api/index';
 
 export default {
   data() {
@@ -39,39 +39,40 @@ export default {
       required: true
     }
   },
-  mounted() {},
+  mounted() {
+    console.log('>>> tiemstamp ', this.reg_date);
+  },
   methods: {
     async uploadFile() {
-      // const formData = new FormData();
-      // const encoded_filename = encodeURI(this.$refs.fileUpload.files[0].name);
-      //
-      // formData.append('img', this.$refs.fileUpload.files[0],  encoded_filename);
-      //
-      // const res = await axios.post('http://localhost:3300/uploadFile', formData);
-      // console.log('file Result >>> ', res);
-
       if(!this.reg_date) { // 날짜 미선택시 false
         alert('날짜를 선택해주세요');
-        return false;
+        return;
       }
 
       const today = new Date();
       today.setDate(today.getDate() -1); // 오늘날짜도 선택 가능
       if(this.reg_date < today) { // 이전날짜 선택시 false
         this.alertErr('올바르지 않는 날짜입니다.');
-        return false;
+        return;
       }
 
       if(!this.fileUpload || this.fileUpload === '') { // 사진 미등록시 false
-        this.alertErr('사진을 입력해 주세요.');
-        return false;
+        this.alertErr('사진을 등록 해주세요.');
+        return;
       }
+      
+      // addSchedule 시작
+      const formData = new FormData();
+      const 확장자 = this.$refs.fileUpload.files[0].name.split('.')[1]
+      const encoded_filename = new Date().getTime() + '.' + 확장자;
+      formData.append('img', this.$refs.fileUpload.files[0],encoded_filename);
+      formData.append('member_id', localStorage.getItem('member_id'));
+      formData.append('reg_date', this.reg_date.getTime());
 
+      const res = request.post('/schedule/addSchedule', formData);
+      
       this.alertSuc('등록이 완료되었습니다.'); // 등록 성공시
-      const date = new Date(this.reg_date);
-      const formattedDate = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()} `;
-      console.log('getDate >>> ', formattedDate);
-      console.log('fileUpload >>> ', this.fileUpload);
+
       this.fileUpload = '';
       this.dialog = false;
     },
@@ -90,8 +91,7 @@ export default {
         this.alertSuccess = false;
       }, 2000);
     },
-
-  }, // methods
+  },
 };
 </script>
 
