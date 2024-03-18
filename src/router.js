@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
 import LoginForm from "@/components/Login/LoginForm";
+import Chat from "@/components/Login/Chat";
 import LoginKeypad from "@/components/Login/LoginKeypad";
 import Schedule from "@/components/Schedule/Schedule";
 import Anothers from "@/components/Schedule/Anothers";
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/anothers",
     component: Feed
+  },
+  {
+    path: "/chat",
+    component: Chat
   },
 
 ];

@@ -40,7 +40,6 @@ export default {
     }
   },
   mounted() {
-    console.log('>>> tiemstamp ', this.reg_date);
   },
   methods: {
     async uploadFile() {
@@ -49,10 +48,29 @@ export default {
         return;
       }
 
-      const today = new Date();
-      today.setDate(today.getDate() -1); // 오늘날짜도 선택 가능
-      if(this.reg_date < today) { // 이전날짜 선택시 false
-        this.alertErr('올바르지 않는 날짜입니다.');
+      // let 어제 = new Date().setDate(new Date().getDate() -1); // 오늘날짜도 선택 가능
+      // let 내일 = new Date().setDate(new Date().getDate() + 1);
+      let today = new Date();
+      const 오늘 = [
+        today.getFullYear(),
+        today.getMonth() + 1,
+        today.getDate()
+      ];
+      const 고른날 = [
+        this.reg_date.getFullYear(),
+        this.reg_date.getMonth() + 1,
+        this.reg_date.getDate()
+      ];
+
+      const isSame = 오늘.join('') == 고른날.join('');
+
+      // 어제 = new Date(어제);
+      // 내일 = new Date(내일);
+
+      if (!isSame) { // 이전날짜 선택시 false
+        this.alertErr('당일만 등록 가능');
+        this.fileUpload = '';
+        this.dialog = false;
         return;
       }
 

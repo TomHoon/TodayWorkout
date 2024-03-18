@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import request from "@/api/index.js";
 
 export default {
@@ -42,6 +44,15 @@ export default {
       memberids: [],
       members: [],
     };
+  },
+  props: {},
+  computed: {
+    has비밀번호() {
+      const 멤버 = this.members.find(
+        (member) => member.member_id == this.selected
+      );
+      return !!멤버?.member_pw;
+    },
   },
   props: {},
   computed: {
@@ -78,6 +89,12 @@ export default {
     getOne멤버데이터(아이디) {
       return this.members.find((member) => member.member_id == 아이디);
     },
+    login() {
+      const 멤버정보 = this.membersInfo.filter(멤버 => {
+        return 멤버.member_id == this.selected;
+      })
+      this.$router.push({ name: 'Password', params: {} });
+    }
   },
 };
 </script>
