@@ -86,18 +86,23 @@ export default {
       const formattedDate = `${year}${month}${day}`;
 
       // find 시작
-      let param = {
-        member_id : localStorage.getItem('member_id'),
-        reg_date : formattedDate
-      }
-      const response = await request.get('/schedule',param);
-
+      const response = await request.get('/schedule');
+      const member_id = localStorage.getItem('member_id');
       console.log("response : ", response)
       console.log("response.data : ", response.data)
       console.log("response.request : ", response.request)
-      console.log("response.data.member_id : ", response.config.member_id)
-      console.log("response.data.reg_date : ", response.config.reg_date)
-      // if(response.config.member_id)
+      console.log("response.data.member_id : ", response.data.member_id)
+      console.log("response.data.reg_date : ", response.data.reg_date)
+      for(let i = 0; i < response.data.length; i++) {
+        if (!(member_id.includes(response.data[i].member_id) && formattedDate.includes(response.data[i].reg_date))) {
+
+        } else {
+          this.alertErr("이미 등록 되어있습니다.");
+          this.fileUpload = '';
+          this.dialog = false;
+          return false;
+        }
+      }
 
       // addSchedule 시작
       const formData = new FormData();
@@ -149,7 +154,7 @@ export default {
   position: fixed;
   top: 7%;
   left: 51%;
-  z-index: 9999;
+  z-index: 9998;
 }
 @keyframes fall {
   from {
