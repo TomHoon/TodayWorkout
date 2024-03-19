@@ -54,15 +54,6 @@ export default {
       return !!멤버?.member_pw;
     },
   },
-  props: {},
-  computed: {
-    has비밀번호() {
-      const 멤버 = this.members.find(
-        (member) => member.member_id == this.selected
-      );
-      return !!멤버?.member_pw;
-    },
-  },
   mounted() {
     this.setMembers();
   },
@@ -71,7 +62,7 @@ export default {
       const data = this.getOne멤버데이터(this.selected);
       localStorage.setItem("member_id", data.member_id);
       localStorage.setItem("member_pw", data.member_pw);
-      
+
       this.$router.push("/password");
     },
     async setMembers() {
@@ -81,7 +72,7 @@ export default {
       //     ? "http://tomhoon.duckdns.org:13300"
       //     : "http://localhost:3300";
       // const { data } = await axios.get(`${host}/members`);
-      
+
       const { data } = await request.get('/members');
       this.members = data;
       this.memberids = data.map((item) => item.member_id);
