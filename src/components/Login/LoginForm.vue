@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 import request from "@/api/index.js";
 
 export default {
@@ -66,13 +64,6 @@ export default {
       this.$router.push("/password");
     },
     async setMembers() {
-      // const mode = import.meta.env.MODE;
-      // const host =
-      //   mode != "dev"
-      //     ? "http://tomhoon.duckdns.org:13300"
-      //     : "http://localhost:3300";
-      // const { data } = await axios.get(`${host}/members`);
-
       const { data } = await request.get('/members');
       this.members = data;
       this.memberids = data.map((item) => item.member_id);

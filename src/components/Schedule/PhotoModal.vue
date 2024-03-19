@@ -80,6 +80,7 @@ export default {
       }
 
       const date = new Date(this.reg_date);
+      const time_stamp = date.getTime();
       const year = date.getFullYear();
       const month = (date.getMonth()+1) < 10 ? '0'+(date.getMonth()+1):(date.getMonth()+1) ;
       const day = (date.getDate()) < 10 ? '0'+(date.getDate()):(date.getDate()) ;
@@ -88,11 +89,7 @@ export default {
       // find 시작
       const response = await request.get('/schedule');
       const member_id = localStorage.getItem('member_id');
-      console.log("response : ", response)
-      console.log("response.data : ", response.data)
-      console.log("response.request : ", response.request)
-      console.log("response.data.member_id : ", response.data.member_id)
-      console.log("response.data.reg_date : ", response.data.reg_date)
+      
       for(let i = 0; i < response.data.length; i++) {
         if (!(member_id.includes(response.data[i].member_id) && formattedDate.includes(response.data[i].reg_date))) {
 
@@ -100,7 +97,7 @@ export default {
           this.alertErr("이미 등록 되어있습니다.");
           this.fileUpload = '';
           this.dialog = false;
-          return false;
+          return;
         }
       }
 
@@ -111,9 +108,9 @@ export default {
       formData.append('img', this.$refs.fileUpload.files[0],encoded_filename);
       formData.append('member_id', localStorage.getItem('member_id'));
       formData.append('reg_date', formattedDate);
+      formData.append('time_stamp', time_stamp);
 
       const res = request.post('/schedule/addSchedule', formData);
-      console.log("res111121234 : ", res)
 
       this.alertSuc('등록이 완료되었습니다.'); // 등록 성공시
 

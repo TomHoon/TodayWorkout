@@ -5,8 +5,10 @@
     variant="elevated"
     closable
     class="alertError"
-    >{{ alertErrorMessage }}</v-alert
-  >
+    >
+    {{ alertErrorMessage }}
+  </v-alert>
+  
   <div class="calendar-wrapper" v-show="true">
     <v-container>
       <v-row justify="space-around">
@@ -64,13 +66,11 @@ export default {
       today.setDate(today.getDate() - 1); // 오늘날짜도 선택 가능
       if (!this.reg_date) {
         this.alertErr("날짜를 선택해주세요.");
-        return false;
+        return;
       }
 
-      if (this.reg_date < today) {
-        this.alertErr("올바르지 않는 날짜입니다.");
-        return false;
-      }
+      localStorage.setItem('selectedDate', new Date().getTime());
+
       this.$router.push("/Anothers");
     },
     alertErr(ErrorMessage) {

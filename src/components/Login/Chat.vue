@@ -14,10 +14,10 @@
   </div> -->
   <div class="container">
     <div class="text-area">
-      <input type="text" style="margin-right:10px" v-model="message">
+      <input type="text" style="margin-right:10px" ref="chatInput" v-model="message" @keyup.enter="sendMessage">
       <v-btn @click="sendMessage">전송</v-btn>
     </div>
-    <div class="message-area">
+    <div class="message-area" ref="messageArea">
       <ul class="msg-ul">
         <li :class="{ar: item.member_id == user}" v-for="(item, idx) in messages" :key="idx">
           {{item.member_id}} : {{item.message}}
@@ -40,7 +40,7 @@ export default {
         message: data.message
       };
       this.messages = [...this.messages, newMsg];
-      console.log("mesage >> ", data);
+      this.setScrollBottom();
       // you can also do this.messages.push(data)
     });
   },
@@ -50,6 +50,10 @@ export default {
       message: "",
       messages: [],
       socket: io("http://tomhoon.duckdns.org:13300"),
+
+      /**
+       * 개발용
+       */
       // socket: io("http://localhost:3300"),
     };
   },
@@ -61,10 +65,25 @@ export default {
         message: this.message,
       });
       this.message = "";
+
+      this.$refs.chatInput.focus();
+
+      this.setScrollBottom();
     },
     async setChatMsg() {
       const { data } = await request.get('/chat');
       this.messages = data;
+    },
+    async setScrollBottom() {
+      const 메세지영역 = this.$refs.messageArea;
+
+      if (!메세지영역) return;
+      
+      const 높이 = 메세지영역?.scrollHeight;
+      
+      setTimeout(() => {
+        메세지영역.scrollTop = 높이*1.5;
+      }, 200);
     }
   },
 };
@@ -95,9 +114,11 @@ input {
   max-width: 500px;
   width: 100%;
   height: 100%;
+  max-height: 700px;
   border: 1px solid rgba(0, 0, 0, 0.516);
   padding:10px;
   border-radius: 10px;
+  overflow: scroll;
 }
 /* .container {
   display: flex;

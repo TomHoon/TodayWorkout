@@ -5,11 +5,11 @@
         <ul>
           <!-- 비번 미입력시 초기값 -->
           <li v-if="pressedPw.length == 0">
-            <span style="color:gray; opacity: 0.3;">****</span>
+            <span style="color: gray; opacity: 0.3">****</span>
           </li>
           <!-- 비번 입력시 -->
           <li v-for="(pw, idx) in pressedPw" :key="idx">
-              <span>*</span>
+            <span>*</span>
           </li>
         </ul>
         <br />
@@ -26,24 +26,36 @@
       </div>
     </div>
   </div>
+  <v-alert
+    v-show="alertError"
+    type="error"
+    variant="elevated"
+    closable
+    class="alertError"
+    >
+    {{ alertErrorMessage }}
+  </v-alert>
 </template>
 
 <script>
+import request from "@/api/index.js";
+
 export default {
   data() {
     return {
       keys: [
-        ['1', '2', '3'],
-        ['4', '5', '6'],
-        ['7', '8', '9'],
-        ['R', '0', 'DEL'],
+        ["1", "2", "3"],
+        ["4", "5", "6"],
+        ["7", "8", "9"],
+        ["R", "0", "DEL"],
       ],
       member: {},
-      pressedPw: []
+      pressedPw: [],
+      alertError: false,
+      alertErrorMessage: "",
     };
   },
-  props: {
-  },
+  props: {},
   mounted() {
     this.member = {
       member_id: localStorage.getItem("member_id"),
@@ -52,30 +64,72 @@ export default {
   },
   methods: {
     press(num) {
-      if (num == 'R') {
+      if (num == "R") {
         this.pressedPw = [];
-      } else if (num == 'DEL') {
+      } else if (num == "DEL") {
         this.pressedPw.pop();
       } else {
         this.pressedPw.push(num);
       }
     },
-    goLogin() {
-      const 입력비번 = this.pressedPw.join('');
-      const {member_pw: 진짜비번} = this.member;
-      
-      if (입력비번 == 진짜비번 || !진짜비번) {
-        this.$router.push('/schedule');
-      } else {
-        alert('비번이 올바르지 않습니다.');
+    async goLogin() {
+      const 입력비번 = this.pressedPw.join("");
+      const { member_pw: 진짜비번 } = this.member;
+
+      if (!입력비번) {
+        this.showAlert("비번을 입력하세요.");
+        return;
       }
+
+      if (!진짜비번) {
+        const param = {
+          member_id: this.member.member_id,
+          member_pw: 입력비번,
+        };
+
+        const res = await request.post("/members/updatePw", param);
+        this.$router.push("/schedule");
+        return;
+      }
+
+      const isSame = this.compare(입력비번, 진짜비번);
+
+      if (isSame) {
+        this.$router.push("/schedule");
+      } else {
+        this.showAlert("비번이 올바르지 않습니다.");
+      }
+    },
+    // TODO: 모듈화
+    makeHash(password) {
+      const salt = "workout";
+      const salted = btoa(password + salt);
+      return salted;
+    },
+    // TODO: 모듈화
+    compare(password, hashed) {
+      const target = this.makeHash(password);
+      return target == hashed;
+    },
+    showAlert(msg) {
+      this.alertErrorMessage = msg;
+      this.alertError = true;
+      
+      setTimeout(() => {
+        this.alertError = false;
+      }, 2000);
     }
   },
 };
 </script>
 
 <style scoped>
-.loginkeypad-page{position:relative;max-width:400px;height:100%;margin:0 auto}
+.loginkeypad-page {
+  position: relative;
+  max-width: 400px;
+  height: 100%;
+  margin: 0 auto;
+}
 .code-wrap {
   height: 70%;
 }
@@ -125,7 +179,6 @@ export default {
   box-shadow: none;
 }
 
-@media screen and (max-width:723px){
-
+@media screen and (max-width: 723px) {
 }
 </style>
