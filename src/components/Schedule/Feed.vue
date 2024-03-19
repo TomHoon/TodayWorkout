@@ -18,14 +18,19 @@
             <div class="card-bottom">
               <div class="bottom-img-area">
                 <template v-if="item.file_name">
-                  <img :src="`${defaultImgUrl}/${item.file_name}`" alt="" class="feed-img" @click="크게보기(item)">
+                  <img
+                    :src="`${defaultImgUrl}/${item.file_name}`"
+                    alt=""
+                    class="feed-img"
+                    @click="크게보기(item)"
+                  />
                 </template>
                 <template v-else>
-                  <img src="../../wide.jpg" alt="" class="feed-img">
+                  <img src="../../wide.jpg" alt="" class="feed-img" />
                 </template>
               </div>
               <div class="bottom-text-area">
-                <span>오운완 완료!</span>  
+                <span>오운완 완료!</span>
               </div>
             </div>
           </div>
@@ -36,42 +41,63 @@
             <h3>인증 멤버 없음</h3>
           </div>
         </template>
-        
+
         <!-- 카드끝 -->
       </div>
     </div>
   </div>
 </template>
 <script>
-import request from '@/api/index'
+import request from "@/api/index";
 
 export default {
   data() {
     return {
-      defaultImgUrl: '',
-      feedData: []
+      defaultImgUrl: "",
+      feedData: [],
     };
   },
   computed: {
     hasFeddData() {
       return this.feedData?.length != 0;
-    }
+    },
   },
   async mounted() {
-    // const res = await axios.get('http://localhost:3300/schedule');
-    this.defaultImgUrl = 
-      import.meta.env.MODE == 'dev' ? 'http://localhost:3300' : 'http://tomhoon.duckdns.org:13300';
+    const selected = localStorage.getItem("selectedDate");
+    const 선택한날짜 = this.get날짜(selected);
 
-    this.defaultImgUrl += '/uploads'
-    const res = await request.get('/schedule');
-    console.log(res.data);
-    this.feedData = res.data;
+    this.defaultImgUrl =
+      import.meta.env.MODE == "dev"
+        ? "http://localhost:3300"
+        : "http://tomhoon.duckdns.org:13300";
+
+    this.defaultImgUrl += "/uploads";
+
+    const res = await request.get("/schedule");
+    this.feedData = res.data.filter((item) => {
+      return 선택한날짜 == this.get날짜(item.time_stamp);
+    });
   },
   methods: {
     크게보기(item) {
       location.href = `${this.defaultImgUrl}/${item.file_name}`;
-    }
-  }
+    },
+    get날짜(timestamp) {
+      const target = new Date(timestamp*1);
+      
+      const year = target.getFullYear();
+
+      const month =
+      target.getMonth() + 1 < 10
+        ? "0" + (target.getMonth() + 1)
+        : target.getMonth() + 1;
+
+      const date =
+        target.getDate() < 10 ? "0" + target.getDate() : target.getDate();
+
+      return year + month + date;
+    },
+  },
 };
 </script>
 <style scoped>
@@ -91,10 +117,10 @@ export default {
   padding: 10px;
   display: flex;
   flex-direction: column;
-  border:1px solid rgba(147, 147, 147, 0.485);
+  border: 1px solid rgba(147, 147, 147, 0.485);
   border-radius: 10px;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .card-top {
   display: flex;
@@ -110,7 +136,7 @@ export default {
   flex-grow: 9;
 }
 .top-right span {
-  color:#00d1b2;
+  color: #00d1b2;
 }
 .card-img img {
   height: 56px;

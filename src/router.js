@@ -19,6 +19,7 @@ const routes = [
   },
   {
     path: "/schedule",
+    name: 'Schedule',
     component: Schedule
   },
   {
