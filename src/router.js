@@ -30,6 +30,11 @@ const routes = [
     path: "/chat",
     component: Chat
   },
+  {
+    path: "/notFound",
+    name: "notFound",
+    component: Schedule
+  },
 
 ];
 
