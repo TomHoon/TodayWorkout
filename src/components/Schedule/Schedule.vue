@@ -64,12 +64,13 @@ export default {
     AnothersPage() {
       const today = new Date();
       today.setDate(today.getDate() - 1); // 오늘날짜도 선택 가능
+
       if (!this.reg_date) {
         this.alertErr("날짜를 선택해주세요.");
         return;
       }
 
-      localStorage.setItem('selectedDate', new Date().getTime());
+      localStorage.setItem('selectedDate', this.reg_date.getTime());
 
       this.$router.push("/Anothers");
     },

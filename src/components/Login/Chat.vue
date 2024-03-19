@@ -95,7 +95,7 @@ input {
 }
 .container {
   display:flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   padding:10px;
   flex-direction: column;
@@ -106,15 +106,15 @@ input {
 }
 .text-area {
   padding-top: 20px;;
-  flex:1;
+  /* flex:1; */
 }
 .message-area {
   margin-top: 10px;
-  flex:9;
+  /* flex:9; */
   max-width: 500px;
   width: 100%;
   height: 100%;
-  max-height: 700px;
+  max-height: 400px;
   border: 1px solid rgba(0, 0, 0, 0.516);
   padding:10px;
   border-radius: 10px;
