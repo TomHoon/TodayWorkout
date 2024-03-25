@@ -108,6 +108,7 @@ input {
   padding-top: 20px;;
   flex:1;
 }
+.test{}
 .message-area {
   margin-top: 10px;
   flex:9;
