@@ -13,5 +13,8 @@ import { createVuetify } from 'vuetify'
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
-  //
+  // 다크테마 추가
+  theme:{
+    defaultTheme: 'dark',
+  }
 })

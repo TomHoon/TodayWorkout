@@ -21,11 +21,11 @@
     </v-container>
 
     <div class="button-wrapper">
-      <div class="pa-4 text-center">
+      <div class="text-center">
         <PhotoModal :reg_date="reg_date"></PhotoModal>
       </div>
-      <div class="pa-4 text-center">
-        <v-btn @click="AnothersPage">  사람들은? </v-btn>
+      <div class="text-center">
+        <v-btn @click="AnothersPage" variant="tonal" >  사람들은? </v-btn>
       </div>
     </div>
     <div class="chat-wrapper">
@@ -90,7 +90,7 @@ export default {
 
 <style>
 .calendar-wrapper {
-  width: 100vw;
+  width: 100%;
   height: auto;
   margin: 0 auto;
 }
@@ -99,8 +99,8 @@ export default {
   width: 100%;
   height: auto;
   justify-content: center;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 20px;
+  margin: 15px 0;
 }
 .alertError {
   animation: fall 0.5s linear 1;
@@ -128,4 +128,6 @@ export default {
   align-items: center;
   font-size: 20px;
 }
+.v-picker.v-sheet{border: 1px solid rgba(33, 150, 243, .1);}
 </style>
+ 

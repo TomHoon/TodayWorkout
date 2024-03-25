@@ -14,9 +14,7 @@
         </ul>
         <br />
       </div>
-      <div class="login-btn">
-        <v-btn @click="goLogin"> 로그인 </v-btn>
-      </div>
+
     </div>
     <div class="keypad-wrapper">
       <div class="key-row" v-for="(item, idx) in keys" :key="idx">
@@ -26,6 +24,11 @@
       </div>
     </div>
   </div>
+
+  <div class="login-btn">
+    <v-btn @click="goLogin" variant="outlined" color="grey" size="large"> 로그인 </v-btn>
+  </div>
+
   <v-alert
     v-show="alertError"
     type="error"
@@ -124,12 +127,12 @@ export default {
 </script>
 
 <style scoped>
-.loginkeypad-page {
-  position: relative;
-  max-width: 400px;
+.loginform-page {
   height: 100%;
-  margin: 0 auto;
+ display:flex;
+ align-items: center;
 }
+.loginkeypad-page{position:relative;width:360px;height:480px;margin:0 auto}
 .code-wrap {
   height: 70%;
 }
@@ -179,6 +182,9 @@ export default {
   box-shadow: none;
 }
 
-@media screen and (max-width: 723px) {
+@media screen and (max-width:723px){
+  .loginkeypad-page{width:100%}
 }
+
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-alert v-show="alertError" type="error" variant="elevated" closable class="alertError">{{alertErrorMessage}}</v-alert>
   <v-alert v-show="alertSuccess" type="success" variant="elevated" closable class="alertSuccess">{{alertSuccessMessage}}</v-alert>
-    <v-btn text="등록하기" @click="dialog = true"></v-btn>
+    <v-btn text="등록하기" @click="dialog = true" variant="tonal" ></v-btn>
 
     <v-dialog v-model="dialog" max-width="480">
       <v-card title="인증사진첨부">

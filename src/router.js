@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from 'vue-router';
 
+import LayoutDefault from '@/components/Layout/LayoutDefault.vue';
 import LoginForm from "@/components/Login/LoginForm";
 import Chat from "@/components/Login/Chat";
 import LoginKeypad from "@/components/Login/LoginKeypad";
@@ -10,17 +11,24 @@ import Feed from "@/components/Schedule/Feed";
 const routes = [
   {
     path: "/",
-    component: LoginForm
-  },
-  {
-    path: "/password",
-    name: 'Password',
-    component: LoginKeypad,
-  },
-  {
-    path: "/schedule",
-    name: 'Schedule',
-    component: Schedule
+    component : LayoutDefault,
+    children:[
+      {
+        path:"",
+        name: 'LoginForm',
+        component:LoginForm,
+      },
+      {
+        path: "/password",
+        name: 'Password',
+        component: LoginKeypad,
+      },
+      {
+        path: "/schedule",
+        ame: 'Schedule',
+        component: Schedule
+      },
+    ]
   },
   {
     path: "/anothers",
